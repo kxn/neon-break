@@ -191,7 +191,19 @@ const engine = new Engine(GODOT_CONFIG);
 				// Reload if there was no error.
 				window.location.reload();
 			}).catch((err) => {
-				console.error('Error while registering service worker:', err);
+				// Installation can outlive the template's two-second timeout.
+                    const retryKey = 'neon-break-coi-retry:' + location.pathname;
+                    navigator.serviceWorker.ready.then((registration) => {
+                        if (registration.scope === new URL('./', location.href).href && !sessionStorage.getItem(retryKey)) {
+                            sessionStorage.setItem(retryKey, '1');
+                            location.reload();
+                        } else {
+                            displayFailureNotice('初始化尚未完成，请刷新页面重试。请使用新版 Chrome、Edge 或 Firefox。');
+                        }
+                    }).catch(displayFailureNotice);
+                    setTimeout(() => {
+                        displayFailureNotice('正在初始化离线组件。如长时间没有开始加载，请刷新页面。');
+                    }, 10000);
 			});
 		} else {
 			// Display the message as usual

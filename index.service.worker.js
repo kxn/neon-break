@@ -4,7 +4,7 @@
 // Incrementing CACHE_VERSION will kick off the install event and force
 // previously cached resources to be updated from the network.
 /** @type {string} */
-const CACHE_VERSION = '1789208248|4339746';
+const CACHE_VERSION = 'neon-f4c7aab9995bf2be';
 /** @type {string} */
 const CACHE_PREFIX = 'NEON BREAK - 霓虹破-sw-cache-';
 const CACHE_NAME = CACHE_PREFIX + CACHE_VERSION;
